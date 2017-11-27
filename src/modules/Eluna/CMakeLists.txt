@@ -66,6 +66,7 @@ if( ${CMAKE_PROJECT_NAME} STREQUAL "MaNGOS" )
         COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/lua_scripts/extensions/"
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/extensions" "${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/lua_scripts/extensions/"
       )
+	  set_target_properties(LuaEngine PROPERTIES FOLDER Script)
     elseif ( MINGW )
       add_custom_command(TARGET LuaEngine
         POST_BUILD

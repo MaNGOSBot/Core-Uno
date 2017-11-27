@@ -28,5 +28,9 @@ else()
     add_library(loadlib ml/loadlib.cpp ml/adt.cpp ml/wdt.cpp ml/mpq.cpp)
 endif()
 
+if(WIN32 AND MSVC)
+	set_target_properties(loadlib PROPERTIES FOLDER Dependencies)
+endif()
+
 # link loadlib with zlib
 target_link_libraries(loadlib zlib)

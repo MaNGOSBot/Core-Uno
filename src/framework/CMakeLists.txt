@@ -56,3 +56,7 @@ add_library(${LIBRARY_NAME} STATIC ${LIBRARY_SRCS})
 if(NOT ACE_USE_EXTERNAL)
     add_dependencies(${LIBRARY_NAME} ace)
 endif()
+
+if(WIN32 AND MSVC)
+	set_target_properties(${LIBRARY_NAME} PROPERTIES FOLDER Core)
+endif()

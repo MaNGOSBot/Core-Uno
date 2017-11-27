@@ -81,6 +81,7 @@ if( WIN32 )
             COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/tools/"
             COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/../../Extractor_Binaries" "${CMAKE_BINARY_DIR}/bin/$(ConfigurationName)/tools/"
         )
+		set_target_properties(${EXECUTABLE_NAME} PROPERTIES FOLDER Tools)
     elseif ( MINGW )
         add_custom_command(TARGET ${EXECUTABLE_NAME}
             POST_BUILD

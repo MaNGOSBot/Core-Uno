@@ -176,6 +176,7 @@ if(WIN32 AND MSVC)
     COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/ahbot.conf.dist" "${CONF_COPY_DIR}"
     COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/aiplayerbot.conf.dist" "${CONF_COPY_DIR}"
   )
+  set_target_properties(${LIBRARY_NAME} PROPERTIES FOLDER Script)
 endif()
 
 # Generate PCH

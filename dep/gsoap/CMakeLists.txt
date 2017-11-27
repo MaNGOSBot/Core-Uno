@@ -25,3 +25,7 @@ include_directories(
 )
 
 add_library(${LIBRARY_NAME} STATIC ${GSOAP_LIBRARY_SRCS})
+
+if(WIN32 AND MSVC)
+	set_target_properties(${LIBRARY_NAME} PROPERTIES FOLDER Dependencies)
+endif()

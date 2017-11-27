@@ -88,3 +88,7 @@ add_dependencies(tests game)
 if (PCH)
   add_cxx_pch(tests ${tests_STAT_PCH_HDR} ${tests_STAT_PCH_SRC})
 endif ()
+
+if(WIN32 AND MSVC)
+	set_target_properties(tests PROPERTIES FOLDER Tests)
+endif()

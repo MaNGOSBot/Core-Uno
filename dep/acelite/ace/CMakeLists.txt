@@ -346,4 +346,8 @@ install(
 
 if(WIN32)
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/\${BUILD_TYPE}/ace.pdb" DESTINATION "${BIN_DIR}" CONFIGURATIONS Debug)
+  
+  if(MSVC)
+	set_target_properties(ace PROPERTIES FOLDER Dependencies)
+  endif()
 endif()

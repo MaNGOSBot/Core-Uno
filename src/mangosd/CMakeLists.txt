@@ -170,6 +170,7 @@ if(WIN32 AND MSVC)
     add_custom_command(TARGET ${EXECUTABLE_NAME}
         POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/mangosd.conf.dist" "${CONF_COPY_DIR}"
     )
+	set_target_properties(${EXECUTABLE_NAME} PROPERTIES FOLDER Core)
 endif()
 
 #Copy dlls to build dir

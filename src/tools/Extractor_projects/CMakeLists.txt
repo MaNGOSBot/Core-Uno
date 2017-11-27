@@ -36,6 +36,9 @@ add_library(vmap
     ${CMAKE_SOURCE_DIR}/src/game/vmap/WorldModel.cpp
     ${CMAKE_SOURCE_DIR}/src/game/vmap/ModelInstance.cpp
 )
+if(WIN32 AND MSVC)
+	set_target_properties(vmap PROPERTIES FOLDER Tools)
+endif()
 
 target_link_libraries(vmap g3dlite zlib)
 

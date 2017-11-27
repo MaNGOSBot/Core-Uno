@@ -391,3 +391,7 @@ if(WITH_TEST)
     target_link_libraries(storm_test ${LIBRARY_NAME})
     install(TARGETS storm_test DESTINATION bin)
 endif()
+
+if(WIN32 AND MSVC)
+	set_target_properties(${LIBRARY_NAME} PROPERTIES FOLDER Dependencies)
+endif()

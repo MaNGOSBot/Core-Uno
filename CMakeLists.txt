@@ -29,6 +29,11 @@ if(POLICY CMP0043)
     cmake_policy(SET CMP0043 OLD)
 endif()
 
+if(MSVC) 
+	#Use solution folders.
+	set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+endif()
+
 set(CMAKE_SKIP_BUILD_RPATH FALSE)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 set(CMAKE_INSTALL_RPATH "${LIBS_DIR}")
@@ -51,7 +56,7 @@ option(BUILD_REALMD         "Build the login server"                        ON)
 option(BUILD_TOOLS          "Build the map/vmap/mmap extractors"            ON)
 option(SCRIPT_LIB_ELUNA     "Compile with support for Eluna scripts"        ON)
 option(SCRIPT_LIB_SD3       "Compile with support for ScriptDev2 scripts"   ON)
-option(PLAYERBOTS           "Enable Player Bots"                            ON)
+option(SCRIPT_BOTS	   		"Compile with support for Bots"                 ON)
 option(SOAP                 "Enable remote access via SOAP"                 OFF)
 option(TESTS                "Build AI CppUnit Tests"                        OFF)
 # Hidden option to enable/disable PCH. DEV ONLY!
@@ -74,6 +79,7 @@ message(
    Scripting engines:
     SCRIPT_LIB_ELUNA        Compile with support for Eluna scripts
     SCRIPT_LIB_SD3          Compile with support for ScriptDev3 scripts
+    SCRIPT_BOTS             Compile with support for AHBot and PlayerBots
 
   To set an option simply type -D<OPTION>=<VALUE> after 'cmake <srcs>'.
   Also, you can specify the generator with -G. see 'cmake --help' for more details
@@ -159,11 +165,11 @@ else()
     message(STATUS "Script engine SD3     : No")
 endif()
 
-if(PLAYERBOTS)
-    message(STATUS "Enable Player Bots    : Yes (default)")
-    add_definitions(-DENABLE_PLAYERBOTS)
+if(SCRIPT_BOTS)
+    message(STATUS "Enable Bots    		  : Yes (default)")
+    add_definitions(-DENABLE_BOTS)
 else()
-    message(STATUS "Enable Player Bots    : No")
+    message(STATUS "Enable Bots    		  : No")
 endif()
 
 if(BUILD_MANGOSD)

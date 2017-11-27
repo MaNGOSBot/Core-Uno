@@ -74,4 +74,7 @@ if(WIN32)
   target_link_libraries(${LIBRARY_NAME}
     zlib
   )
+  if(MSVC)
+	set_target_properties(${LIBRARY_NAME} PROPERTIES FOLDER Dependencies)
+  endif()
 endif()

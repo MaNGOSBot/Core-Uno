@@ -38,3 +38,7 @@ include_directories(
 #-----------------------------------------------------------------------------
 # Build the Recast library
 add_library(recast STATIC ${Recast_LIB_SRCS})
+
+if(WIN32 AND MSVC)
+	set_target_properties(recast PROPERTIES FOLDER Dependencies)
+endif()

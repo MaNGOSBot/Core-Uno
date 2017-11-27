@@ -198,4 +198,5 @@ if(WIN32 AND MSVC)
     add_custom_command(TARGET ${LIBRARY_NAME}
         POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/AuctionHouseBot/ahbot.conf.dist" "${CONF_COPY_DIR}"
     )
+	set_target_properties(${LIBRARY_NAME} PROPERTIES FOLDER Core)
 endif()

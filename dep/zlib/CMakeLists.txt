@@ -28,3 +28,7 @@ include_directories(
 add_library(zlib STATIC
   ${zlib_SRCS}
 )
+
+if(WIN32 AND MSVC)
+	set_target_properties(zlib PROPERTIES FOLDER Dependencies)
+endif()

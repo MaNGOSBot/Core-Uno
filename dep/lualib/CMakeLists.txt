@@ -17,3 +17,7 @@ include_directories(
 )
 
 add_library(lualib STATIC ${lua_STAT_SRCS})
+
+if(WIN32 AND MSVC)
+	set_target_properties(lualib PROPERTIES FOLDER Dependencies)
+endif()

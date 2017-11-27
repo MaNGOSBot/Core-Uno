@@ -587,3 +587,7 @@ if(UNIX)
         ${mangosscript_PROPERTIES}
     )
 endif()
+
+if(WIN32 AND MSVC)
+	set_target_properties(mangosscript PROPERTIES FOLDER Script)
+endif()

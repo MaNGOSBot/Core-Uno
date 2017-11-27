@@ -44,3 +44,7 @@ include_directories(
 add_library(detour STATIC
   ${detour_SRCS}
 )
+
+if(WIN32 AND MSVC)
+	set_target_properties(detour PROPERTIES FOLDER Dependencies)
+endif()
