@@ -49,7 +49,7 @@
 #ifdef ENABLE_ELUNA
 #include "LuaEngine.h"
 #endif /* ENABLE_ELUNA */
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
 #include "playerbot.h"
 #include "PlayerbotAIConfig.h"
 #endif
@@ -75,7 +75,7 @@ class LoginQueryHolder : public SqlQueryHolder
         bool Initialize();
 };
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
 
 class PlayerbotLoginQueryHolder : public LoginQueryHolder
 {
@@ -231,7 +231,7 @@ class CharacterHandler
                 return;
             }
             session->HandlePlayerLogin((LoginQueryHolder*)holder);
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
             Player* player = sObjectMgr.GetPlayer(guid, true);
             if (player && !player->GetPlayerbotAI())
             {

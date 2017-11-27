@@ -56,7 +56,7 @@
 #include "LuaEngine.h"
 #include "ElunaEventMgr.h"
 #endif /* ENABLE_ELUNA */
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
 #include "playerbot.h"
 #include "GuildTaskMgr.h"
 #endif
@@ -1108,7 +1108,7 @@ void Unit::JustKilledCreature(Creature* victim, Player* responsiblePlayer)
             bg->HandleKillUnit(victim, responsiblePlayer);
 
             // Used by Eluna
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
         sGuildTaskMgr.CheckKillTask(responsiblePlayer, victim);
 #endif
 #ifdef ENABLE_ELUNA

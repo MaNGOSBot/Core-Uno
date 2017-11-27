@@ -4,7 +4,7 @@
 # Please see the included DOCS/LICENSE.md for more information
 #
 
-if( ${CMAKE_PROJECT_NAME} STREQUAL "MaNGOS" )
+if( ${CMAKE_PROJECT_NAME} STREQUAL "MaNGOSBot" )
 
   if ( USE_COREPCH )
     include_directories(${CMAKE_CURRENT_BINARY_DIR})

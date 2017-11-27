@@ -100,7 +100,7 @@ class ChatHandler
         bool isValidChatMessage(const char* msg);
         bool HasSentErrorMessage() { return sentErrorMessage;}
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
         WorldSession* GetSession() { return m_session; }
 #endif
 
@@ -621,7 +621,7 @@ class ChatHandler
         bool HandleMmapTestArea(char* args);
         bool HandleMmapTestHeight(char* args);
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
         bool HandlePlayerbotCommand(char* args);
         bool HandleRandomPlayerbotCommand(char* args);
         bool HandleAhBotCommand(char* args);

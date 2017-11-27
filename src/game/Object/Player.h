@@ -62,7 +62,7 @@ class Item;
 
 struct AreaTrigger;
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
 class PlayerbotAI;
 class PlayerbotMgr;
 #endif
@@ -1457,7 +1457,7 @@ class Player : public Unit
         /*********************************************************/
 
         bool LoadFromDB(ObjectGuid guid, SqlQueryHolder* holder);
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
         bool MinimalLoadFromDB(QueryResult *result, uint32 guid);
 #endif
 
@@ -2386,7 +2386,7 @@ class Player : public Unit
         bool IsTappedByMeOrMyGroup(Creature* creature);
         bool isAllowedToLoot(Creature* creature);
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
         //EquipmentSets& GetEquipmentSets() { return m_EquipmentSets; }
         void SetPlayerbotAI(PlayerbotAI* ai) { assert(!m_playerbotAI && !m_playerbotMgr); m_playerbotAI = ai; }
         PlayerbotAI* GetPlayerbotAI() { return m_playerbotAI; }
@@ -2640,7 +2640,7 @@ class Player : public Unit
         GridReference<Player> m_gridRef;
         MapReference m_mapRef;
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
         PlayerbotAI* m_playerbotAI;
         PlayerbotMgr* m_playerbotMgr;
 #endif

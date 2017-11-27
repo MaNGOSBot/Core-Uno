@@ -78,7 +78,7 @@
 #include "LuaEngine.h"
 #endif /* ENABLE_ELUNA */
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
 #include "AhBot.h"
 #include "PlayerbotAIConfig.h"
 #include "RandomPlayerbotMgr.h"
@@ -1495,7 +1495,7 @@ void World::SetInitialWorldSettings()
     sEluna->OnConfigLoad(false); // Must be done after Eluna is initialized and scripts have run.
 #endif
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
     sPlayerbotAIConfig.Initialize();
 #endif
 
@@ -1521,7 +1521,7 @@ void World::showFooter()
 #endif
 
     // PLAYERBOTS can be included or excluded but also disabled via mangos.conf
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
     bool playerBotActive = sConfig.GetBoolDefault("PlayerbotAI.DisableBots", true);
     if (playerBotActive)
     {
@@ -1703,13 +1703,13 @@ void World::Update(uint32 diff)
     if (m_timers[WUPDATE_AHBOT].Passed())
     {
         sAuctionBot.Update();
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
         auctionbot.Update();
 #endif
         m_timers[WUPDATE_AHBOT].Reset();
     }
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
     sRandomPlayerbotMgr.UpdateAI(diff);
     sRandomPlayerbotMgr.UpdateSessions(diff);
 #endif
@@ -2101,10 +2101,10 @@ void World::ShutdownServ(uint32 time, uint32 options, uint8 exitcode)
     if (time == 0)
     {
         if (!(options & SHUTDOWN_MASK_IDLE) || GetActiveAndQueuedSessionCount() == 0)
-        { 
+        {
                 sObjectAccessor.SaveAllPlayers();        // save all players.
                 m_stopEvent = true;                                // exist code already set
-        }                             
+        }
         else
         {
             m_ShutdownTimer = 1;
@@ -2117,7 +2117,7 @@ void World::ShutdownServ(uint32 time, uint32 options, uint8 exitcode)
         ShutdownMsg(true);
     }
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
     sRandomPlayerbotMgr.LogoutAllBots();
 #endif
 

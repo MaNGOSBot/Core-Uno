@@ -43,7 +43,7 @@
 #ifdef ENABLE_ELUNA
 #include "LuaEngine.h"
 #endif /* ENABLE_ELUNA */
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
 #include "playerbot.h"
 #include "RandomPlayerbotMgr.h"
 #endif
@@ -260,7 +260,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
 #ifdef ENABLE_ELUNA
             sEluna->OnChat(GetPlayer(), type, lang, msg, player);
 #endif /* ENABLE_ELUNA */
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
             if (player->GetPlayerbotAI())
             {
                 player->GetPlayerbotAI()->HandleCommand(type, msg, *GetPlayer());
@@ -304,7 +304,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                 return;
 #endif /* ENABLE_ELUNA */
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
             for (GroupReference* itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
             {
                 Player* player = itr->getSource();
@@ -352,7 +352,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                     guild->BroadcastToGuild(this, msg, lang == LANG_ADDON ? LANG_ADDON : LANG_UNIVERSAL);
                 }
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
                 PlayerbotMgr *mgr = GetPlayer()->GetPlayerbotMgr();
                 if (mgr)
                 {
@@ -430,7 +430,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                 return;
 #endif /* ENABLE_ELUNA */
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
             for (GroupReference* itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
             {
                 Player* player = itr->getSource();
@@ -479,7 +479,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                 return;
 #endif /* ENABLE_ELUNA */
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
             for (GroupReference* itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
             {
                 Player* player = itr->getSource();
@@ -519,7 +519,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                 return;
 #endif /* ENABLE_ELUNA */
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
             for (GroupReference* itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
             {
                 Player* player = itr->getSource();
@@ -613,13 +613,13 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                     if (!sEluna->OnChat(GetPlayer(), type, lang, msg, chn))
                         return;
 #endif /* ENABLE_ELUNA */
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
                     if (_player->GetPlayerbotMgr() && chn->GetFlags() & 0x18)
                     {
                         _player->GetPlayerbotMgr()->HandleCommand(type, msg);
                     }
                     sRandomPlayerbotMgr.HandleCommand(type, msg, *_player);
-#endif /* ENABLE_PLAYERBOTS */
+#endif /* ENABLE_BOTS */
                     chn->Say(_player, msg.c_str(), lang); 
                 }
             }

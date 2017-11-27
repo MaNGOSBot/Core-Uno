@@ -808,7 +808,7 @@ class WorldSession
         void HandleGuildBankBuyTab(WorldPacket& recv_data);
         void HandleQueryGuildBankTabText(WorldPacket& recv_data);
         void HandleSetGuildBankTabText(WorldPacket& recv_data);
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
         void HandleBotPackets();
 #endif
 

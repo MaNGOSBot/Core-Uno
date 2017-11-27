@@ -44,7 +44,7 @@
 #ifdef ENABLE_ELUNA
 #include "LuaEngine.h"
 #endif /* ENABLE_ELUNA */
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
 #include "playerbot.h"
 #endif
 
@@ -147,7 +147,7 @@ char const* WorldSession::GetPlayerName() const
 /// Send a packet to the client
 void WorldSession::SendPacket(WorldPacket const* packet)
 {
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
     if (GetPlayer()) {
         if (GetPlayer()->GetPlayerbotAI())
             GetPlayer()->GetPlayerbotAI()->HandleBotOutgoingPacket(*packet);
@@ -254,7 +254,7 @@ bool WorldSession::Update(PacketFilter& updater)
 
                     // lag can cause STATUS_LOGGEDIN opcodes to arrive after the player started a transfer
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
                     if (_player && _player->GetPlayerbotMgr())
                         _player->GetPlayerbotMgr()->HandleMasterIncomingPacket(*packet);
 #endif
@@ -330,7 +330,7 @@ bool WorldSession::Update(PacketFilter& updater)
         delete packet;
     }
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
     if (GetPlayer() && GetPlayer()->GetPlayerbotMgr())
         GetPlayer()->GetPlayerbotMgr()->UpdateSessions(0);
 #endif
@@ -366,7 +366,7 @@ bool WorldSession::Update(PacketFilter& updater)
     return true;
 }
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
 void WorldSession::HandleBotPackets()
 {
 	WorldPacket* packet;
@@ -396,7 +396,7 @@ void WorldSession::LogoutPlayer(bool Save)
         if (ObjectGuid lootGuid = GetPlayer()->GetLootGuid())
             { DoLootRelease(lootGuid); }
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
         if (_player->GetPlayerbotMgr())
             _player->GetPlayerbotMgr()->LogoutAllBots();
         sRandomPlayerbotMgr.OnPlayerLogout(_player);
@@ -510,7 +510,7 @@ void WorldSession::LogoutPlayer(bool Save)
 
         ///- Leave all channels before player delete...
         _player->CleanupChannels();
-#ifndef ENABLE_PLAYERBOTS
+#ifndef ENABLE_BOTS
         ///- If the player is in a group (or invited), remove him. If the group if then only 1 person, disband the group.
         _player->UninviteFromGroup();
 

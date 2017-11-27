@@ -425,7 +425,7 @@ class Group
             return m_boundInstances[difficulty]; 
         }
 
-#ifdef ENABLE_PLAYERBOTS
+#ifdef ENABLE_BOTS
         ObjectGuid GetTargetIcon(int index) { return m_targetIcons[index]; }
         Rolls GetRolls() { return RollId; }
 #endif
