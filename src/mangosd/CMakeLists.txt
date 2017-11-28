@@ -85,8 +85,8 @@ include_directories(
 
 if(SCRIPT_MANGOS_BOT)
     include_directories(
-        ${CMAKE_SOURCE_DIR}/src/modules/Bots/playerbot
-        ${CMAKE_SOURCE_DIR}/src/modules/Bots/ahbot
+        ${CMAKE_SOURCE_DIR}/src/modules/MaNGOSBot/playerbot
+        ${CMAKE_SOURCE_DIR}/src/modules/MaNGOSBot/ahbot
     )
 endif()
 

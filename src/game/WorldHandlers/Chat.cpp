@@ -45,9 +45,9 @@
 #endif /* ENABLE_ELUNA */
 
 #ifdef ENABLE_BOTS
-#include "../../../modules/Bots/ahbot/AhBot.h"
-#include "../../../modules/Bots/playerbot/playerbot.h"
-#include "../../../modules/Bots/playerbot/GuildTaskMgr.h"
+#include "../../../modules/MaNGOSBot/ahbot/AhBot.h"
+#include "../../../modules/MaNGOSBot/playerbot/playerbot.h"
+#include "../../../modules/MaNGOSBot/playerbot/GuildTaskMgr.h"
 #endif /* ENABLE_BOTS */
 
 // Supported shift-links (client generated and server side)
