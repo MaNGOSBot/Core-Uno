@@ -504,6 +504,9 @@ bool Engine::ListenAndExecute(Action* action, Event event)
 
 void Engine::LogAction(const char* format, ...)
 {
+	if (!sPlayerbotAIConfig.logValuesPerTick)
+		return;
+
     char buf[1024];
 
     va_list ap;

@@ -84,16 +84,16 @@ void PlayerbotFactory::Prepare()
 
 void PlayerbotFactory::Randomize(bool incremental)
 {
-    sLog.outDetail("Preparing to randomize...");
+    //sLog.outDetail("Preparing to randomize...");
     Prepare();
 
-    sLog.outDetail("Resetting player...");
+    //sLog.outDetail("Resetting player...");
     bot->resetTalents(true);
     ClearSpells();
     ClearInventory();
     bot->SaveToDB();
 
-    sLog.outDetail("Initializing quests...");
+    //sLog.outDetail("Initializing quests...");
     InitQuests();
     // quest rewards boost bot level, so reduce back
     bot->SetLevel(level);
@@ -102,58 +102,58 @@ void PlayerbotFactory::Randomize(bool incremental)
     CancelAuras();
     bot->SaveToDB();
 
-    sLog.outDetail("Initializing spells (step 1)...");
+    //sLog.outDetail("Initializing spells (step 1)...");
     InitAvailableSpells();
 
-    sLog.outDetail("Initializing skills (step 1)...");
+    //sLog.outDetail("Initializing skills (step 1)...");
     InitSkills();
     InitTradeSkills();
 
-    sLog.outDetail("Initializing talents...");
+    //sLog.outDetail("Initializing talents...");
     InitTalents();
 
-    sLog.outDetail("Initializing spells (step 2)...");
+    //sLog.outDetail("Initializing spells (step 2)...");
     InitAvailableSpells();
     InitSpecialSpells();
 
-    sLog.outDetail("Initializing mounts...");
+    //sLog.outDetail("Initializing mounts...");
     InitMounts();
 
-    sLog.outDetail("Initializing skills (step 2)...");
+    //sLog.outDetail("Initializing skills (step 2)...");
     UpdateTradeSkills();
     bot->SaveToDB();
 
-    sLog.outDetail("Initializing equipmemt...");
+    //sLog.outDetail("Initializing equipmemt...");
     InitEquipment(incremental);
 
-    sLog.outDetail("Initializing bags...");
+    //sLog.outDetail("Initializing bags...");
     InitBags();
 
-    sLog.outDetail("Initializing ammo...");
+    //sLog.outDetail("Initializing ammo...");
     InitAmmo();
 
-    sLog.outDetail("Initializing food...");
+    //sLog.outDetail("Initializing food...");
     InitFood();
 
-    sLog.outDetail("Initializing potions...");
+    //sLog.outDetail("Initializing potions...");
     InitPotions();
 
-    sLog.outDetail("Initializing second equipment set...");
+    //sLog.outDetail("Initializing second equipment set...");
     InitSecondEquipmentSet();
 
-    sLog.outDetail("Initializing inventory...");
+    //sLog.outDetail("Initializing inventory...");
     InitInventory();
 
-    sLog.outDetail("Initializing guilds...");
+    //sLog.outDetail("Initializing guilds...");
     InitGuild();
 
-    sLog.outDetail("Initializing pet...");
+    //sLog.outDetail("Initializing pet...");
     InitPet();
 
-    sLog.outDetail("Saving to DB...");
+    //sLog.outDetail("Saving to DB...");
     bot->SetMoney(urand(level * 1000, level * 5 * 1000));
     bot->SaveToDB();
-    sLog.outDetail("Done.");
+    //sLog.outDetail("Done.");
 }
 
 void PlayerbotFactory::InitPet()
@@ -190,7 +190,7 @@ void PlayerbotFactory::InitPet()
 
         if (ids.empty())
         {
-            sLog.outError("No pets available for bot %s (%d level)", bot->GetName(), bot->getLevel());
+            //sLog.outError("No pets available for bot %s (%d level)", bot->GetName(), bot->getLevel());
             return;
         }
 
@@ -228,7 +228,7 @@ void PlayerbotFactory::InitPet()
             bot->SetPet(pet);
             bot->SetPetGuid(pet->GetObjectGuid());
 
-            sLog.outDebug(  "Bot %s: assign pet %d (%d level)", bot->GetName(), co->Entry, bot->getLevel());
+            //sLog.outDebug(  "Bot %s: assign pet %d (%d level)", bot->GetName(), co->Entry, bot->getLevel());
             pet->SavePetToDB(PET_SAVE_AS_CURRENT);
             bot->PetSpellInitialize();
             break;
@@ -246,7 +246,7 @@ void PlayerbotFactory::InitPet()
     }
     else
     {
-        sLog.outError("Cannot create pet for bot %s", bot->GetName());
+        //sLog.outError("Cannot create pet for bot %s", bot->GetName());
         return;
     }
 
@@ -623,7 +623,7 @@ void PlayerbotFactory::InitEquipment(bool incremental)
         vector<uint32>& ids = items[slot];
         if (ids.empty())
         {
-            sLog.outDebug(  "%s: no items to equip for slot %d", bot->GetName(), slot);
+            //sLog.outDebug(  "%s: no items to equip for slot %d", bot->GetName(), slot);
             continue;
         }
 
@@ -743,7 +743,7 @@ void PlayerbotFactory::InitSecondEquipmentSet()
         vector<uint32>& ids = i->second;
         if (ids.empty())
         {
-            sLog.outDebug(  "%s: no items to make second equipment set for slot %d", bot->GetName(), i->first);
+            //sLog.outDebug(  "%s: no items to make second equipment set for slot %d", bot->GetName(), i->first);
             continue;
         }
 
@@ -782,7 +782,7 @@ void PlayerbotFactory::InitBags()
 
     if (ids.empty())
     {
-        sLog.outError("%s: no bags found", bot->GetName());
+        //sLog.outError("%s: no bags found", bot->GetName());
         return;
     }
 
@@ -875,7 +875,7 @@ void PlayerbotFactory::EnchantItem(Item* item)
 
     if (ids.empty())
     {
-        sLog.outDebug(  "%s: no enchantments found for item %d", bot->GetName(), item->GetProto()->ItemId);
+        //sLog.outDebug(  "%s: no enchantments found for item %d", bot->GetName(), item->GetProto()->ItemId);
         return;
     }
 
@@ -1106,7 +1106,7 @@ void PlayerbotFactory::InitTalents(uint32 specNo)
         vector<TalentEntry const*> &spells = i->second;
         if (spells.empty())
         {
-            sLog.outError("%s: No spells for talent row %d", bot->GetName(), i->first);
+            //sLog.outError("%s: No spells for talent row %d", bot->GetName(), i->first);
             continue;
         }
 
@@ -1474,7 +1474,7 @@ void PlayerbotFactory::InitInventoryTrade()
 
     if (ids.empty())
     {
-        sLog.outError("No trade items available for bot %s (%d level)", bot->GetName(), bot->getLevel());
+        //sLog.outError("No trade items available for bot %s (%d level)", bot->GetName(), bot->getLevel());
         return;
     }
 
@@ -1567,7 +1567,7 @@ void PlayerbotFactory::InitGuild()
 
     if (guilds.empty())
     {
-        sLog.outError("No random guilds available");
+        //sLog.outError("No random guilds available");
         return;
     }
 
@@ -1576,7 +1576,7 @@ void PlayerbotFactory::InitGuild()
     Guild* guild = sGuildMgr.GetGuildById(guildId);
     if (!guild)
     {
-        sLog.outError("Invalid guild %u", guildId);
+        //sLog.outError("Invalid guild %u", guildId);
         return;
     }
 

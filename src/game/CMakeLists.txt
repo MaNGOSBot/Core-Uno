@@ -163,13 +163,13 @@ if(PCH)
     ADD_CXX_PCH(${LIBRARY_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.h ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.cpp)
 endif()
 
-if(SCRIPT_BOTS)
+if(SCRIPT_MANGOS_BOT)
     include_directories(
-        ${CMAKE_SOURCE_DIR}/src/modules/Bots/playerbot
-        ${CMAKE_SOURCE_DIR}/src/modules/Bots/ahbot
+        ${CMAKE_SOURCE_DIR}/src/modules/MaNGOSBot/playerbot
+        ${CMAKE_SOURCE_DIR}/src/modules/MaNGOSBot/ahbot
     )
-    target_link_libraries(${LIBRARY_NAME} Bots)
-    add_dependencies(${LIBRARY_NAME} Bots)
+    target_link_libraries(${LIBRARY_NAME} MaNGOSBot)
+    add_dependencies(${LIBRARY_NAME} MaNGOSBot)
 endif()
 
 if(SCRIPT_LIB_SD3)

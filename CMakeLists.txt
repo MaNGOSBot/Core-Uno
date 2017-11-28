@@ -29,7 +29,7 @@ if(POLICY CMP0043)
     cmake_policy(SET CMP0043 OLD)
 endif()
 
-if(MSVC) 
+if(MSVC)
 	#Use solution folders.
 	set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 endif()
@@ -56,7 +56,7 @@ option(BUILD_REALMD         "Build the login server"                        ON)
 option(BUILD_TOOLS          "Build the map/vmap/mmap extractors"            ON)
 option(SCRIPT_LIB_ELUNA     "Compile with support for Eluna scripts"        ON)
 option(SCRIPT_LIB_SD3       "Compile with support for ScriptDev2 scripts"   ON)
-option(SCRIPT_BOTS	   		"Compile with support for Bots"                 ON)
+option(SCRIPT_MANGOS_BOT	   		"Compile with support for Bots"                 ON)
 option(SOAP                 "Enable remote access via SOAP"                 OFF)
 option(TESTS                "Build AI CppUnit Tests"                        OFF)
 # Hidden option to enable/disable PCH. DEV ONLY!
@@ -79,7 +79,7 @@ message(
    Scripting engines:
     SCRIPT_LIB_ELUNA        Compile with support for Eluna scripts
     SCRIPT_LIB_SD3          Compile with support for ScriptDev3 scripts
-    SCRIPT_BOTS             Compile with support for AHBot and PlayerBots
+    SCRIPT_MANGOS_BOT       Compile with support for MaNGOSBot
 
   To set an option simply type -D<OPTION>=<VALUE> after 'cmake <srcs>'.
   Also, you can specify the generator with -G. see 'cmake --help' for more details
@@ -165,11 +165,11 @@ else()
     message(STATUS "Script engine SD3     : No")
 endif()
 
-if(SCRIPT_BOTS)
-    message(STATUS "Enable Bots    		  : Yes (default)")
+if(SCRIPT_MANGOS_BOT)
+    message(STATUS "Enable MaNGOSBot      : Yes (default)")
     add_definitions(-DENABLE_BOTS)
 else()
-    message(STATUS "Enable Bots    		  : No")
+    message(STATUS "Enable MaNGOSBot      : No")
 endif()
 
 if(BUILD_MANGOSD)

@@ -16,7 +16,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-set(LIBRARY_NAME Bots)
+set(LIBRARY_NAME MaNGOSBot)
 
 #Add PCH Files
 set(bots_PCH "${CMAKE_CURRENT_SOURCE_DIR}/botpch.h")
@@ -181,5 +181,5 @@ endif()
 
 # Generate PCH
 if(PCH)
-    ADD_CXX_PCH(Bots ${bots_PCH})
+    ADD_CXX_PCH(${LIBRARY_NAME} ${bots_PCH})
 endif()

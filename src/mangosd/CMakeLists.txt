@@ -83,7 +83,7 @@ include_directories(
     ${OPENSSL_INCLUDE_DIR}
 )
 
-if(SCRIPT_BOTS)
+if(SCRIPT_MANGOS_BOT)
     include_directories(
         ${CMAKE_SOURCE_DIR}/src/modules/Bots/playerbot
         ${CMAKE_SOURCE_DIR}/src/modules/Bots/ahbot
