@@ -8,5 +8,3 @@ enum Roles : uint8 {
 	ROLE_PVP_DPS = 4
 };
 
-
-

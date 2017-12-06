@@ -10,7 +10,7 @@ using ai::InventoryAction;
 
 class BotFactory : public InventoryAction {
 private:
-	Roles botRole;
+	Roles Role;
 
 private:
 	// Initialization Functions 

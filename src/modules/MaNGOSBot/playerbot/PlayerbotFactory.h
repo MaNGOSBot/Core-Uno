@@ -12,11 +12,7 @@ using ai::InventoryAction;
 class PlayerbotFactory : public InventoryAction
 {
 public:
-    PlayerbotFactory(Player* bot, uint32 level, uint32 itemQuality = 0) : bot(bot), level(level), itemQuality(itemQuality), InventoryAction(bot->GetPlayerbotAI(), "factory") 
-	{
-		AvailableRoles[CLASS_WARRIOR] = { ROLE_TANK };
-		AvailableRoles[CLASS_DRUID] = { ROLE_HEALER };
-	}
+	PlayerbotFactory(Player* bot, uint32 level, uint32 itemQuality = 0) : bot(bot), level(level), itemQuality(itemQuality), InventoryAction(bot->GetPlayerbotAI(), "factory") {}
 
     static ObjectGuid GetRandomBot();
     void CleanRandomize();

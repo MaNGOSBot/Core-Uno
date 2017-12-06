@@ -18,6 +18,17 @@ TalentFactory::TalentFactory() {
 	};
 	TalentTemplate[CLASS_ROGUE] = { make_pair(ROLE_DPS, RogueDPS()) };
 	TalentTemplate[CLASS_HUNTER] = { make_pair(ROLE_DPS, HunterDPS_MM()) };
+
+
+	ClassRoles[CLASS_WARRIOR] = { ROLE_TANK, ROLE_DPS };
+	ClassRoles[CLASS_DRUID] = { ROLE_HEALER, ROLE_TANK, ROLE_DPS };
+	ClassRoles[CLASS_SHAMAN] = { ROLE_DPS, ROLE_HEALER };
+	ClassRoles[CLASS_PALADIN] = { ROLE_DPS, ROLE_HEALER, ROLE_TANK };
+	ClassRoles[CLASS_HUNTER] = { ROLE_DPS };
+	ClassRoles[CLASS_ROGUE] = { ROLE_DPS };
+	ClassRoles[CLASS_MAGE] = { ROLE_DPS };
+	ClassRoles[CLASS_WARLOCK] = { ROLE_DPS };
+	ClassRoles[CLASS_PRIEST] = { ROLE_DPS, ROLE_HEALER };
 }
 
 map<uint32, uint8> TalentFactory::WarriorTank() {
