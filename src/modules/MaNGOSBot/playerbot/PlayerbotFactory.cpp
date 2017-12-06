@@ -121,7 +121,8 @@ void PlayerbotFactory::Randomize(bool incremental)
     InitMounts();
 
     //sLog.outDetail("Initializing skills (step 2)...");
-    UpdateTradeSkills();
+	// @FIXME: Re-do trade skills
+    //UpdateTradeSkills();
     bot->SaveToDB();
 
     //sLog.outDetail("Initializing equipmemt...");
