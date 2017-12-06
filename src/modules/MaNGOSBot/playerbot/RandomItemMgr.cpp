@@ -3,11 +3,11 @@
 #include "PlayerbotAIConfig.h"
 #include "RandomItemMgr.h"
 
-#include "../../modules/Bots/ahbot/AhBot.h"
+#include "../../modules/MaNGOSBot/ahbot/AhBot.h"
 #include "DatabaseEnv.h"
 #include "PlayerbotAI.h"
 
-#include "../../modules/Bots/ahbot/AhBotConfig.h"
+#include "../../modules/MaNGOSBot/ahbot/AhBotConfig.h"
 
 char * strstri (const char* str1, const char* str2);
 

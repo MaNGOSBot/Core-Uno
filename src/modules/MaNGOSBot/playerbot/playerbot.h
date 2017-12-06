@@ -21,6 +21,7 @@ int strcmpi(std::string s1, std::string s2);
 #include "Guild.h"
 
 #include "playerbotDefs.h"
+#include "factories\TalentFactory.h"
 #include "PlayerbotAIAware.h"
 #include "PlayerbotMgr.h"
 #include "RandomPlayerbotMgr.h"

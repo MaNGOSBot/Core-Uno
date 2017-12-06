@@ -102,15 +102,16 @@ void PlayerbotFactory::Randomize(bool incremental)
     CancelAuras();
     bot->SaveToDB();
 
-    //sLog.outDetail("Initializing spells (step 1)...");
-    InitAvailableSpells();
 
     //sLog.outDetail("Initializing skills (step 1)...");
     InitSkills();
-    InitTradeSkills();
+
+	// @FIXME: Re-do trade skills
+    //InitTradeSkills();
 
     //sLog.outDetail("Initializing talents...");
-    InitTalents();
+    //InitTalents();
+	InitTalentsNew();
 
     //sLog.outDetail("Initializing spells (step 2)...");
     InitAvailableSpells();
@@ -301,6 +302,88 @@ void PlayerbotFactory::InitTalents()
         InitTalents(2 - specNo);
 }
 
+void PlayerbotFactory::InitTalents(uint32 specNo)
+{
+	uint32 classMask = bot->getClassMask();
+
+	map<uint32, vector<TalentEntry const*> > spells;
+	for (uint32 i = 0; i < sTalentStore.GetNumRows(); ++i)
+	{
+		TalentEntry const *talentInfo = sTalentStore.LookupEntry(i);
+		if (!talentInfo)
+			continue;
+
+		TalentTabEntry const *talentTabInfo = sTalentTabStore.LookupEntry(talentInfo->TalentTab);
+		if (!talentTabInfo || talentTabInfo->tabpage != specNo)
+			continue;
+
+		if ((classMask & talentTabInfo->ClassMask) == 0)
+			continue;
+
+		spells[talentInfo->Row].push_back(talentInfo);
+	}
+
+	uint32 freePoints = bot->GetFreeTalentPoints();
+	for (map<uint32, vector<TalentEntry const*> >::iterator i = spells.begin(); i != spells.end(); ++i)
+	{
+		vector<TalentEntry const*> &spells = i->second;
+		if (spells.empty())
+		{
+			//sLog.outError("%s: No spells for talent row %d", bot->GetName(), i->first);
+			continue;
+		}
+
+		int attemptCount = 0;
+		while (!spells.empty() && (int)freePoints - (int)bot->GetFreeTalentPoints() < 5 && attemptCount++ < 3 && bot->GetFreeTalentPoints())
+		{
+			int index = urand(0, spells.size() - 1);
+			TalentEntry const *talentInfo = spells[index];
+			for (int rank = 0; rank < MAX_TALENT_RANK && bot->GetFreeTalentPoints(); ++rank)
+			{
+				uint32 spellId = talentInfo->RankID[rank];
+				if (!spellId)
+					continue;
+				bot->learnSpell(spellId, false);
+				bot->UpdateFreeTalentPoints(false);
+			}
+			spells.erase(spells.begin() + index);
+		}
+
+		freePoints = bot->GetFreeTalentPoints();
+	}
+}
+
+void PlayerbotFactory::InitTalentsNew() {
+	uint8 botClass = bot->getClass();
+	// @FIXME: Implement random role probability and AvailableRoles map
+	switch (botClass) {
+	case CLASS_DRUID:
+		InitTalentsNew(ROLE_HEALER);
+		break;
+	case CLASS_WARRIOR:
+		InitTalentsNew(ROLE_TANK);
+		break;
+	default:
+		InitTalents();
+	}
+}
+
+void PlayerbotFactory::InitTalentsNew(uint8 role) {
+	uint8 cls = bot->getClass();
+	uint32 freeTalents = bot->GetFreeTalentPoints();
+	map<TalentEntry const*, uint8> talents = TalentFactory::instance().Get(cls, role);
+
+	for (map<TalentEntry const*, uint8>::iterator it = talents.begin(); (it != talents.end() && freeTalents > 0); ++it) {
+		for (uint8 i = 0; i < it->second && freeTalents > 0; ++i) {
+			uint32 spell = it->first->RankID[i];
+			if (!spell)
+				continue;
+			bot->learnSpell(spell, false);
+			bot->UpdateFreeTalentPoints(false);
+			freeTalents = bot->GetFreeTalentPoints();
+		}
+	}
+}
 
 class DestroyItemsVisitor : public IterateItemsVisitor
 {
@@ -1079,56 +1162,7 @@ void PlayerbotFactory::InitSpecialSpells()
     }
 }
 
-void PlayerbotFactory::InitTalents(uint32 specNo)
-{
-    uint32 classMask = bot->getClassMask();
 
-    map<uint32, vector<TalentEntry const*> > spells;
-    for (uint32 i = 0; i < sTalentStore.GetNumRows(); ++i)
-    {
-        TalentEntry const *talentInfo = sTalentStore.LookupEntry(i);
-        if(!talentInfo)
-            continue;
-
-        TalentTabEntry const *talentTabInfo = sTalentTabStore.LookupEntry( talentInfo->TalentTab );
-        if(!talentTabInfo || talentTabInfo->tabpage != specNo)
-            continue;
-
-        if( (classMask & talentTabInfo->ClassMask) == 0 )
-            continue;
-
-        spells[talentInfo->Row].push_back(talentInfo);
-    }
-
-    uint32 freePoints = bot->GetFreeTalentPoints();
-    for (map<uint32, vector<TalentEntry const*> >::iterator i = spells.begin(); i != spells.end(); ++i)
-    {
-        vector<TalentEntry const*> &spells = i->second;
-        if (spells.empty())
-        {
-            //sLog.outError("%s: No spells for talent row %d", bot->GetName(), i->first);
-            continue;
-        }
-
-        int attemptCount = 0;
-        while (!spells.empty() && (int)freePoints - (int)bot->GetFreeTalentPoints() < 5 && attemptCount++ < 3 && bot->GetFreeTalentPoints())
-        {
-            int index = urand(0, spells.size() - 1);
-            TalentEntry const *talentInfo = spells[index];
-            for (int rank = 0; rank < MAX_TALENT_RANK && bot->GetFreeTalentPoints(); ++rank)
-            {
-                uint32 spellId = talentInfo->RankID[rank];
-                if (!spellId)
-                    continue;
-                bot->learnSpell(spellId, false);
-                bot->UpdateFreeTalentPoints(false);
-            }
-            spells.erase(spells.begin() + index);
-        }
-
-        freePoints = bot->GetFreeTalentPoints();
-    }
-}
 
 ObjectGuid PlayerbotFactory::GetRandomBot()
 {
@@ -1173,6 +1207,7 @@ void AddPrevQuests(uint32 questId, list<uint32>& questIds)
         questIds.push_back(prevId);
     }
 }
+
 void PlayerbotFactory::InitQuests()
 {
 	QueryResult *results = WorldDatabase.PQuery("SELECT entry, RequiredClasses, RequiredRaces FROM quest_template where QuestLevel = -1 and MinLevel <= '%u'",
