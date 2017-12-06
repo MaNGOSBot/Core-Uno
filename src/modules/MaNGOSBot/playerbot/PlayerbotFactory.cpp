@@ -358,10 +358,16 @@ void PlayerbotFactory::InitTalentsNew() {
 	// @FIXME: Implement random role probability and AvailableRoles map
 	switch (botClass) {
 	case CLASS_DRUID:
+	case CLASS_SHAMAN:
 		InitTalentsNew(ROLE_HEALER);
 		break;
 	case CLASS_WARRIOR:
+	case CLASS_PALADIN:
 		InitTalentsNew(ROLE_TANK);
+		break;
+	case CLASS_ROGUE:
+	case CLASS_HUNTER:
+		InitTalentsNew(ROLE_DPS);
 		break;
 	default:
 		InitTalents();
