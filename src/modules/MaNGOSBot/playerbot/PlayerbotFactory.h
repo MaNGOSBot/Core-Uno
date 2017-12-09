@@ -12,7 +12,21 @@ using ai::InventoryAction;
 class PlayerbotFactory : public InventoryAction
 {
 public:
-	PlayerbotFactory(Player* bot, uint32 level, uint32 itemQuality = 0) : bot(bot), level(level), itemQuality(itemQuality), InventoryAction(bot->GetPlayerbotAI(), "factory") {}
+	PlayerbotFactory(Player* bot, uint32 level, uint32 itemQuality = 0) : bot(bot), level(level), itemQuality(itemQuality), InventoryAction(bot->GetPlayerbotAI(), "factory") {
+		switch (bot->getClass()) {
+		case CLASS_WARRIOR:
+		case CLASS_PALADIN:
+			role = ROLE_TANK;
+			break;
+		case CLASS_DRUID:
+		case CLASS_PRIEST:
+		case CLASS_SHAMAN:
+			role = ROLE_HEALER;
+			break;
+		default:
+			role = ROLE_DPS;
+		}
+	}
 
     static ObjectGuid GetRandomBot();
     void CleanRandomize();
@@ -36,8 +50,6 @@ private:
     void InitSpecialSpells();
     void InitTalents();
     void InitTalents(uint32 specNo);
-	void InitTalentsNew();
-	void InitTalentsNew(uint8 role);
     void InitQuests();
     void InitPet();
     void ClearInventory();
@@ -59,12 +71,13 @@ private:
     void InitInventorySkill();
     Item* StoreItem(uint32 itemId, uint32 count);
     void InitGuild();
+	//void InitQuestSpells();
 
 private:
     Player* bot;
     uint32 level;
     uint32 itemQuality;
-	map<uint8, list<uint8>> AvailableRoles;
+	uint8 role;
 
     static uint32 tradeSkills[];
     static list<uint32> classQuestIds;

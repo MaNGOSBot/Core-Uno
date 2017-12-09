@@ -78,7 +78,7 @@ void RandomPlayerbotMgr::UpdateAIInternal(uint32 elapsed)
 
     ostringstream out; out << "Random bots are now scheduled to be processed in the background. Next re-schedule in " << sPlayerbotAIConfig.randomBotUpdateInterval << " seconds";
     sLog.outString(out.str().c_str());
-    sWorld.SendWorldText(3, out.str().c_str());
+    //sWorld.SendWorldText(3, out.str().c_str());
 
     PrintStats();
 }
@@ -129,7 +129,7 @@ uint32 RandomPlayerbotMgr::AddRandomBots()
                 uint32 randomTime = 30 + urand(sPlayerbotAIConfig.randomBotUpdateInterval, sPlayerbotAIConfig.randomBotUpdateInterval * 3);
                 ScheduleRandomize(bot, randomTime);
                 bots.insert(bot);
-                //sLog.outString( "New random bot %d added", bot);
+                sLog.outString( "New random bot %d added", bot);
                 if (bots.size() >= maxAllowedBotCount) break;
             }
         } while (result->NextRow());
@@ -160,7 +160,7 @@ bool RandomPlayerbotMgr::ProcessBot(uint32 bot)
 		Player* player = GetPlayerBot(bot);
 		if (!player || !player->GetGroup())
 		{
-			//sLog.outString("Bot %d expired", bot);
+			sLog.outString("Bot %d expired", bot);
 			SetEventValue(bot, "add", 0, 0);
 		}
         return true;
@@ -187,7 +187,7 @@ bool RandomPlayerbotMgr::ProcessBot(uint32 bot)
 
     if (player->GetGroup())
     {
-        //sLog.outString("Skipping bot %d as it is in group", bot);
+        sLog.outString("Skipping bot %d as it is in group", bot);
         return false;
     }
 
@@ -204,7 +204,7 @@ bool RandomPlayerbotMgr::ProcessBot(Player* player)
     {
         if (!GetEventValue(bot, "dead"))
         {
-            //sLog.outDetail("Setting dead flag for bot %d", bot);
+            sLog.outDetail("Setting dead flag for bot %d", bot);
             uint32 randomTime = urand(sPlayerbotAIConfig.minRandomBotReviveTime, sPlayerbotAIConfig.maxRandomBotReviveTime);
             SetEventValue(bot, "dead", 1, randomTime);
             SetEventValue(bot, "revive", 1, randomTime - 60);
@@ -232,7 +232,7 @@ bool RandomPlayerbotMgr::ProcessBot(Player* player)
     uint32 randomize = GetEventValue(bot, "randomize");
     if (!randomize)
     {
-        //sLog.outString("Randomizing bot %d", bot);
+        sLog.outString("Randomizing bot %d", bot);
         Randomize(player);
         uint32 randomTime = urand(sPlayerbotAIConfig.minRandomBotRandomizeTime, sPlayerbotAIConfig.maxRandomBotRandomizeTime);
         ScheduleRandomize(bot, randomTime);
@@ -242,7 +242,7 @@ bool RandomPlayerbotMgr::ProcessBot(Player* player)
     uint32 logout = GetEventValue(bot, "logout");
     if (!logout)
     {
-        //sLog.outString("Logging out bot %d", bot);
+        sLog.outString("Logging out bot %d", bot);
         LogoutPlayerBot(bot);
         SetEventValue(bot, "logout", 1, sPlayerbotAIConfig.maxRandomBotInWorldTime);
         return true;
@@ -251,7 +251,7 @@ bool RandomPlayerbotMgr::ProcessBot(Player* player)
     uint32 teleport = GetEventValue(bot, "teleport");
     if (!teleport)
     {
-        //sLog.outDetail("Random teleporting bot %d", bot);
+        sLog.outDetail("Random teleporting bot %d", bot);
         RandomTeleportForLevel(player);
         SetEventValue(bot, "teleport", 1, sPlayerbotAIConfig.maxRandomBotInWorldTime);
         return true;
@@ -263,7 +263,7 @@ bool RandomPlayerbotMgr::ProcessBot(Player* player)
 void RandomPlayerbotMgr::Revive(Player* player)
 {
     uint32 bot = player->GetGUIDLow();
-    //sLog.outDetail("Reviving dead bot %d", bot);
+    sLog.outDetail("Reviving dead bot %d", bot);
     SetEventValue(bot, "dead", 0, 0);
     SetEventValue(bot, "revive", 0, 0);
     RandomTeleport(player);
@@ -276,7 +276,7 @@ void RandomPlayerbotMgr::RandomTeleport(Player* bot, vector<WorldLocation> &locs
 
     if (locs.empty())
     {
-        //sLog.outError("Cannot teleport bot %s - no locations available", bot->GetName());
+        sLog.outError("Cannot teleport bot %s - no locations available", bot->GetName());
         return;
     }
 
@@ -310,14 +310,15 @@ void RandomPlayerbotMgr::RandomTeleport(Player* bot, vector<WorldLocation> &locs
             continue;
 
         z = 0.05f + ground;
-        //sLog.outDetail("Random teleporting bot %s to %s %f,%f,%f (%u/%u locations)", bot->GetName(), area->area_name[0], x, y, z, attemtps, locs.size());
+        sLog.outDetail("Random teleporting bot %s to %s %f,%f,%f (%u/%u locations)",
+                bot->GetName(), area->area_name[0], x, y, z, attemtps, locs.size());
 
         bot->GetMotionMaster()->Clear();
         bot->TeleportTo(loc.mapid, x, y, z, 0);
         return;
     }
 
-    //sLog.outError("Cannot teleport bot %s - no locations available", bot->GetName());
+    sLog.outError("Cannot teleport bot %s - no locations available", bot->GetName());
 }
 
 void RandomPlayerbotMgr::PrepareTeleportCache()
@@ -329,7 +330,7 @@ void RandomPlayerbotMgr::PrepareTeleportCache()
     QueryResult* results = CharacterDatabase.PQuery("select map_id, x, y, z, level from ai_playerbot_tele_cache");
     if (results)
     {
-        //sLog.outBasic("Loading random teleport caches for %d levels...", maxLevel);
+        sLog.outBasic("Loading random teleport caches for %d levels...", maxLevel);
         do
         {
             Field* fields = results->Fetch();
@@ -345,7 +346,7 @@ void RandomPlayerbotMgr::PrepareTeleportCache()
     }
     else
     {
-        //sLog.outBasic("Preparing random teleport caches for %d levels...", maxLevel);
+        sLog.outBasic("Preparing random teleport caches for %d levels...", maxLevel);
         BarGoLink bar(maxLevel);
         for (uint8 level = 1; level <= maxLevel; level++)
         {
@@ -480,10 +481,20 @@ void RandomPlayerbotMgr::RandomTeleport(Player* bot)
 
 void RandomPlayerbotMgr::Randomize(Player* bot)
 {
-    if (bot->getLevel() == 1)
-        RandomizeFirst(bot);
-    else
-        IncreaseLevel(bot);
+		if (bot->getLevel() == 1)
+		{
+			RandomizeFirst(bot);
+		}
+		else
+		{
+			// EJ bot wont increase level
+			if (bot->IsDead())
+				bot->ResurrectPlayer(1.0f);
+			bot->CombatStop(true);
+			IncreaseLevel(bot);
+			RandomTeleportForLevel(bot);
+		}
+	
 }
 
 void RandomPlayerbotMgr::IncreaseLevel(Player* bot)
@@ -575,7 +586,7 @@ uint32 RandomPlayerbotMgr::GetZoneLevel(uint16 mapId, float teleX, float teleY, 
 
 void RandomPlayerbotMgr::Refresh(Player* bot)
 {
-    //sLog.outDetail("Refreshing bot %s", bot->GetName());
+    sLog.outDetail("Refreshing bot %s", bot->GetName());
     if (bot->IsDead())
     {
         bot->ResurrectPlayer(1.0f);
@@ -601,7 +612,7 @@ void RandomPlayerbotMgr::Refresh(Player* bot)
     bot->RemoveAllAttackers();
     bot->ClearInCombat();
 
-    bot->DurabilityRepairAll(false, 1.0f, false);
+	bot->DurabilityRepairAll(false, 1.0, false);
 	bot->SetHealthPercent(100);
 	bot->SetPvP(true);
 
@@ -699,7 +710,7 @@ bool RandomPlayerbotMgr::HandlePlayerbotConsoleCommand(ChatHandler* handler, cha
     if (cmd == "reset")
     {
         CharacterDatabase.PExecute("delete from ai_playerbot_random_bots");
-        //sLog.outString("Random bots were reset for all players. Please restart the Server.");
+        sLog.outString("Random bots were reset for all players. Please restart the Server.");
         return true;
     }
     else if (cmd == "stats")
@@ -714,7 +725,7 @@ bool RandomPlayerbotMgr::HandlePlayerbotConsoleCommand(ChatHandler* handler, cha
     }
     else if (cmd == "init" || cmd == "refresh" || cmd == "teleport" || cmd == "revive")
     {
-		//sLog.outString("Randomizing bots for %d accounts", sPlayerbotAIConfig.randomBotAccounts.size());
+		sLog.outString("Randomizing bots for %d accounts", sPlayerbotAIConfig.randomBotAccounts.size());
         list<uint32> botIds;
         for (list<uint32>::iterator i = sPlayerbotAIConfig.randomBotAccounts.begin(); i != sPlayerbotAIConfig.randomBotAccounts.end(); ++i)
         {
@@ -745,7 +756,8 @@ bool RandomPlayerbotMgr::HandlePlayerbotConsoleCommand(ChatHandler* handler, cha
             if (!bot)
                 continue;
 
-            //sLog.outString("[%u/%u] Processing command '%s' for bot '%s'", processed++, botIds.size(), cmd.c_str(), bot->GetName());
+            sLog.outString("[%u/%u] Processing command '%s' for bot '%s'",
+                    processed++, botIds.size(), cmd.c_str(), bot->GetName());
 
             if (cmd == "init")
             {
@@ -777,7 +789,7 @@ bool RandomPlayerbotMgr::HandlePlayerbotConsoleCommand(ChatHandler* handler, cha
         list<string> messages = sRandomPlayerbotMgr.HandlePlayerbotCommand(args, NULL);
         for (list<string>::iterator i = messages.begin(); i != messages.end(); ++i)
         {
-            //sLog.outString(i->c_str());
+            sLog.outString(i->c_str());
         }
         return true;
     }
@@ -841,7 +853,7 @@ void RandomPlayerbotMgr::OnPlayerLogin(Player* player)
     if (!IsRandomBot(player))
     {
         players.push_back(player);
-        //sLog.outDebug("Including non-random bot player %s into random bot update", player->GetName());
+        sLog.outDebug("Including non-random bot player %s into random bot update", player->GetName());
     }
 }
 

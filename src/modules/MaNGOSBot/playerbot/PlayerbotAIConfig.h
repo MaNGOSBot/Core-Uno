@@ -29,7 +29,8 @@ public:
         aoeRadius;
     uint32 criticalHealth, lowHealth, mediumHealth, almostFullHealth;
     uint32 lowMana, mediumMana;
-
+	uint32 InvLevel;
+	bool lootRestrictions;
     uint32 openGoSpell;
     bool randomBotAutologin;
     bool botAutologin;
@@ -66,6 +67,7 @@ public:
     uint32 randomBotGuildCount;
     bool deleteRandomBotGuilds;
     std::list<uint32> randomBotGuilds;
+	bool randomBotShowHelmet;
 
     bool guildTaskEnabled;
     uint32 minGuildTaskChangeTime, maxGuildTaskChangeTime;
