@@ -3,7 +3,7 @@
 #include "AddLootAction.h"
 
 #include "../../LootObjectStack.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"

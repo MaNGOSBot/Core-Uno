@@ -2,7 +2,7 @@
 #include "Mail.h"
 #include "../../playerbot.h"
 #include "MailAction.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 #include "../../Helpers.h"
 
 using namespace ai;

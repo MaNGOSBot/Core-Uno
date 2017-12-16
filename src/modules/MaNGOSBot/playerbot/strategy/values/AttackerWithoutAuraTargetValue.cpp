@@ -1,7 +1,7 @@
 #include "botpch.h"
 #include "../../playerbot.h"
 #include "AttackerWithoutAuraTargetValue.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 using namespace ai;
 

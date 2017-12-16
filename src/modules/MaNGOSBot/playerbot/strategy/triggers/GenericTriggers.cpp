@@ -2,7 +2,7 @@
 #include "../../playerbot.h"
 #include "GenericTriggers.h"
 #include "../../LootObjectStack.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 using namespace ai;
 

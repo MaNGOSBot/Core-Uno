@@ -1,6 +1,6 @@
 #pragma once
 #include "../Trigger.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 #define BUFF_TRIGGER(clazz, spell, action) \
     class clazz : public BuffTrigger \

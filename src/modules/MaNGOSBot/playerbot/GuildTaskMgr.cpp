@@ -1,6 +1,6 @@
 #include "../botpch.h"
 #include "playerbot.h"
-#include "PlayerbotAIConfig.h"
+#include "config/PlayerbotAIConfig.h"
 #include "GuildTaskMgr.h"
 
 #include "../../modules/MaNGOSBot/ahbot/AhBot.h"

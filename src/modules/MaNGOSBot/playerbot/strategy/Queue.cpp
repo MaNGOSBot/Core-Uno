@@ -3,7 +3,7 @@
 #include "Action.h"
 #include "Queue.h"
 
-#include "../PlayerbotAIConfig.h"
+#include "../config/PlayerbotAIConfig.h"
 using namespace ai;
 
 

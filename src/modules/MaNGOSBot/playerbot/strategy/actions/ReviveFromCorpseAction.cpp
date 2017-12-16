@@ -2,7 +2,7 @@
 #include "../../playerbot.h"
 #include "ReviveFromCorpseAction.h"
 #include "../../PlayerbotFactory.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 using namespace ai;
 

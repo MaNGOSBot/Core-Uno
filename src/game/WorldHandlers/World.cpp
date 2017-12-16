@@ -80,7 +80,7 @@
 
 #ifdef ENABLE_BOTS
 #include "AhBot.h"
-#include "PlayerbotAIConfig.h"
+#include "config/PlayerbotAIConfig.h"
 #include "RandomPlayerbotMgr.h"
 #endif
 

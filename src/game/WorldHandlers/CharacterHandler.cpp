@@ -51,7 +51,7 @@
 #endif /* ENABLE_ELUNA */
 #ifdef ENABLE_BOTS
 #include "playerbot.h"
-#include "PlayerbotAIConfig.h"
+#include "config/PlayerbotAIConfig.h"
 #endif
 
 // config option SkipCinematics supported values

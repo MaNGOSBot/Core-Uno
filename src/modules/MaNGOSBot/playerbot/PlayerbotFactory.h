@@ -13,6 +13,7 @@ class PlayerbotFactory : public InventoryAction
 {
 public:
 	PlayerbotFactory(Player* bot, uint32 level, uint32 itemQuality = 0) : bot(bot), level(level), itemQuality(itemQuality), InventoryAction(bot->GetPlayerbotAI(), "factory") {
+
 		switch (bot->getClass()) {
 		case CLASS_WARRIOR:
 		case CLASS_PALADIN:

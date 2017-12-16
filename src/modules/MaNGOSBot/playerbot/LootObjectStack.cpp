@@ -1,7 +1,7 @@
 #include "../botpch.h"
 #include "LootObjectStack.h"
 #include "playerbot.h"
-#include "PlayerbotAIConfig.h"
+#include "config/PlayerbotAIConfig.h"
 
 using namespace ai;
 using namespace std;

@@ -2,7 +2,7 @@
 #include "../../playerbot.h"
 #include "EmoteAction.h"
 
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 using namespace ai;
 
 map<string, uint32> EmoteAction::emotes;

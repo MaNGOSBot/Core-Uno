@@ -1,13 +1,13 @@
 #include "botpch.h"
 #include "../../playerbot.h"
 #include "ReadyCheckAction.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 using namespace ai;
 #include "botpch.h"
 #include "../../playerbot.h"
 #include "ReadyCheckAction.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 using namespace ai;
 

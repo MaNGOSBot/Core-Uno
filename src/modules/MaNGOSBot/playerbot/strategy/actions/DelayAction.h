@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 #include "../../RandomPlayerbotMgr.h"
 #include "../Action.h"
 

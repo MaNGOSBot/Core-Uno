@@ -3,7 +3,7 @@
 #include "LootAction.h"
 
 #include "../../LootObjectStack.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 #include "../../../ahbot/AhBot.h"
 #include "../../RandomPlayerbotMgr.h"
 #include "../values/ItemUsageValue.h"

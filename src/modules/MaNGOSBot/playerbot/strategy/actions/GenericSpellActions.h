@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Action.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 #define BEGIN_SPELL_ACTION(clazz, name) \
 class clazz : public CastSpellAction \

@@ -3,7 +3,7 @@
 #include "SuggestWhatToDoAction.h"
 #include "../../../ahbot/AhBot.h"
 #include "ChannelMgr.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 using namespace ai;
 

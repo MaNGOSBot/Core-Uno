@@ -38,6 +38,15 @@ set(LIBRARY_SRCS
     ${bots_PCH}
 )
 
+#Config files 
+file(GLOB Playerbot_Configs ${CMAKE_CURRENT_SOURCE_DIR}/playerbot/config/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/playerbot/config/*.h)
+    source_group("Player Bot\\Config" FILES ${Playerbot_Configs})
+    LIST(APPEND LIBRARY_SRCS ${Playerbot_Configs})
+
+file(GLOB Playerbot_Structs ${CMAKE_CURRENT_SOURCE_DIR}/playerbot/structures/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/playerbot/structures/*.h)
+	source_group("Player Bot\\Structures" FILES ${Playerbot_Structs})
+	LIST(APPEND LIBRARY_SRCS ${Playerbot_Structs})
+	
 #Factory files
 file(GLOB Playerbot_Factories ${CMAKE_CURRENT_SOURCE_DIR}/playerbot/factories/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/playerbot/factories/*.h)
     source_group("Player Bot\\Factories" FILES ${Playerbot_Factories})

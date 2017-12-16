@@ -1,7 +1,7 @@
 #include "../botpch.h"
 #include "playerbot.h"
 #include "FleeManager.h"
-#include "PlayerbotAIConfig.h"
+#include "config/PlayerbotAIConfig.h"
 #include "Group.h"
 #include "strategy/values/LastMovementValue.h"
 

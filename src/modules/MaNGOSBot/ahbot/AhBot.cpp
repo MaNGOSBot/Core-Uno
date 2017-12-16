@@ -12,7 +12,7 @@
 #include "ObjectAccessor.h"
 #include "ObjectGuid.h"
 #include "ObjectMgr.h"
-#include "playerbot/PlayerbotAIConfig.h"
+#include "playerbot/config/PlayerbotAIConfig.h"
 #include "AccountMgr.h"
 #include "playerbot/playerbot.h"
 #include "Player.h"

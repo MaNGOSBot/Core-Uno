@@ -4,7 +4,7 @@
 #include "Mail.h"
 
 #include "../../GuildTaskMgr.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 using namespace ai;
 
 bool CheckMailAction::Execute(Event event)

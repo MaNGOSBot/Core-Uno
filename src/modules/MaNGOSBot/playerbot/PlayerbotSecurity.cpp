@@ -1,7 +1,7 @@
 #include "../botpch.h"
 #include "PlayerbotMgr.h"
 #include "playerbot.h"
-#include "PlayerbotAIConfig.h"
+#include "config/PlayerbotAIConfig.h"
 #include "PlayerbotAI.h"
 #include "ChatHelper.h"
 

@@ -2,7 +2,7 @@
 #include "../../playerbot.h"
 #include "AoeValues.h"
 
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 using namespace ai;
 
 list<ObjectGuid> FindMaxDensity(Player* bot)

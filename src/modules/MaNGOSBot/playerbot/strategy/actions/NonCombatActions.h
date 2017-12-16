@@ -2,7 +2,7 @@
 
 #include "../Action.h"
 #include "UseItemAction.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 namespace ai
 {

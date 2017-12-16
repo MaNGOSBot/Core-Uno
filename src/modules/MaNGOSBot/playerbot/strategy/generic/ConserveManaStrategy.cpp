@@ -1,7 +1,7 @@
 #include "botpch.h"
 #include "../../playerbot.h"
 #include "ConserveManaStrategy.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 #include "../actions/GenericSpellActions.h"
 #include "../values/LastSpellCastValue.h"
 

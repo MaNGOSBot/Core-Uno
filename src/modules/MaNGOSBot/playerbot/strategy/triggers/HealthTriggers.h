@@ -1,6 +1,6 @@
 #pragma once
 #include "../Trigger.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 namespace ai
 {

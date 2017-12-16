@@ -3,14 +3,14 @@
 #include "PlayerbotFactory.h"
 #include "SQLStorages.h"
 #include "ItemPrototype.h"
-#include "PlayerbotAIConfig.h"
+#include "config/PlayerbotAIConfig.h"
 #include "AccountMgr.h"
 #include "DBCStore.h"
 #include "SharedDefines.h"
 #include "ahbot/AhBot.h"
 #include "RandomPlayerbotFactory.h"
 #include "AiFactory.h"
-
+#include "factories/TalentFactory.h"
 
 using namespace ai;
 using namespace std;
@@ -160,6 +160,9 @@ void PlayerbotFactory::Randomize(bool incremental)
 
     sLog.outString("Saving to DB...");
     bot->SetMoney(urand(level * 1000, level * 5 * 1000));
+	// Set Health/Mana to 100%
+	bot->SetHealthPercent(100.0);
+	bot->SetPower(POWER_MANA, bot->GetMaxPower(POWER_MANA));
     bot->SaveToDB();
     sLog.outDetail("Done.");
 }
@@ -302,10 +305,11 @@ void PlayerbotFactory::InitTalents()
 
 	uint8 cls = bot->getClass();
 	uint32 freeTalents = bot->GetFreeTalentPoints();
-	map<TalentEntry const*, uint8> talents = TalentFactory::instance().Get(cls, role);
+
+	TalentSet* spec = TalentFactory::instance().GetRandomTalentSet(cls, role);
 
 	// If the factory doesn't have any talents, fall back.
-	if (talents.size() < 1) {
+	if (!spec || spec->Talents.size() < 1) {
 		uint32 point = urand(0, 100);
 		uint8 cls = bot->getClass();
 		uint32 p1 = sPlayerbotAIConfig.specProbability[cls][0];
@@ -319,9 +323,9 @@ void PlayerbotFactory::InitTalents()
 		return;
 	}
 
-	for (map<TalentEntry const*, uint8>::iterator it = talents.begin(); (it != talents.end() && freeTalents > 0); ++it) {
-		for (uint8 i = 0; i < it->second && freeTalents > 0; ++i) {
-			uint32 spell = it->first->RankID[i];
+	for (list<Talent>::iterator it = spec->Talents.begin(); (it != spec->Talents.end() && freeTalents > 0); ++it) {
+		for (uint8 i = 0; i < it->Rank && freeTalents > 0; ++i) {
+			uint32 spell = it->GetEntry()->RankID[i];
 			if (!spell)
 				continue;
 			bot->learnSpell(spell, false);

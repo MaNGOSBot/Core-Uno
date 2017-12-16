@@ -2,7 +2,7 @@
 #include "../playerbot.h"
 
 #include "Engine.h"
-#include "../PlayerbotAIConfig.h"
+#include "../config/PlayerbotAIConfig.h"
 
 using namespace ai;
 using namespace std;

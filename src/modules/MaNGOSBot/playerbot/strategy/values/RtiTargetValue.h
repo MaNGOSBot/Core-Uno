@@ -1,5 +1,5 @@
 #pragma once
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 #include "../Value.h"
 #include "Group.h"
 #include "TargetValue.h"

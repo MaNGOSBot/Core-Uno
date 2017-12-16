@@ -2,7 +2,7 @@
 #include "../../playerbot.h"
 #include "GreetAction.h"
 
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 using namespace ai;
 
 GreetAction::GreetAction(PlayerbotAI* ai) : Action(ai, "greet")

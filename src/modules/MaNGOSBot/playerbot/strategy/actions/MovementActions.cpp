@@ -6,7 +6,7 @@
 #include "MovementGenerator.h"
 #include "../../FleeManager.h"
 #include "../../LootObjectStack.h"
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 
 using namespace ai;
 

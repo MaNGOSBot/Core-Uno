@@ -2,7 +2,7 @@
 #include "../../playerbot.h"
 #include "CastCustomSpellAction.h"
 
-#include "../../PlayerbotAIConfig.h"
+#include "../../config/PlayerbotAIConfig.h"
 using namespace ai;
 
 bool CastCustomSpellAction::Execute(Event event)
