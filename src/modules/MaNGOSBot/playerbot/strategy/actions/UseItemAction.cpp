@@ -1,4 +1,4 @@
-#include "pchdef.h"
+#include "botpch.h"
 #include "../../playerbot.h"
 #include "UseItemAction.h"
 #include "DBCStore.h"
@@ -87,14 +87,14 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget)
 
 	uint8 bagIndex = item->GetBagSlot();
 	uint8 slot = item->GetSlot();
+	uint8 spell_count = 0;
 	uint8 cast_count = 1;
 	uint64 item_guid = item->GetObjectGuid().GetRawValue();
-	uint32 glyphIndex = 0;
-	uint8 unk_flags = 0;
+	//uint32 glyphIndex = 0;
+	//uint8 unk_flags = 0;
 
 	WorldPacket* const packet = new WorldPacket(CMSG_USE_ITEM, 1 + 1 + 1 + 4 + 8 + 4 + 1 + 8 + 1);
-	*packet << bagIndex << slot << cast_count << uint32(0) << item_guid
-		<< glyphIndex << unk_flags;
+	*packet << bagIndex << slot << spell_count << cast_count << item_guid; //<< glyphIndex << unk_flags;
 
 	bool targetSelected = false;
 	ostringstream out; out << "Using " << chat->formatItem(item->GetProto());
@@ -121,10 +121,20 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget)
 
 	if (itemTarget)
 	{
-		uint32 targetFlag = TARGET_FLAG_ITEM;
-		*packet << targetFlag << itemTarget->GetPackGUID();
-		out << " on " << chat->formatItem(itemTarget->GetProto());
-		targetSelected = true;
+		if (item->GetProto()->Class == ITEM_CLASS_GEM)
+		{
+			bool fit = SocketItem(itemTarget, item) || SocketItem(itemTarget, item, true);
+			if (!fit)
+				ai->TellMaster("Socket does not fit");
+			return fit;
+		}
+		else
+		{
+		   uint32 targetFlag = TARGET_FLAG_ITEM;
+		   *packet << targetFlag << itemTarget->GetPackGUID();
+		   out << " on " << chat->formatItem(itemTarget->GetProto());
+		   targetSelected = true;
+		}
 	}
 
 	Player* master = GetMaster();
@@ -192,13 +202,13 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget)
 				if (selfOnly)
 					return false;
 
-				*packet << (uint16)TARGET_FLAG_TRADE_ITEM << (uint8)1 << (uint64)TRADE_SLOT_NONTRADED;
+				*packet << (uint32)TARGET_FLAG_TRADE_ITEM << (uint8)1 << (uint64)TRADE_SLOT_NONTRADED;
 				targetSelected = true;
 				out << " on traded item";
 			}
 			else
 			{
-				*packet << (uint16)TARGET_FLAG_ITEM;
+				*packet << (uint32)TARGET_FLAG_ITEM;
 				packet->appendPackGUID(itemForSpell->GetObjectGuid());
 				targetSelected = true;
 				out << " on " << chat->formatItem(itemForSpell->GetProto());
@@ -210,7 +220,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget)
 		}
 		else if (!goGuid && !itemTarget)
 		{
-			*packet << (uint16)TARGET_FLAG_SELF;
+			*packet << (uint32)TARGET_FLAG_SELF;
 			targetSelected = true;
 			out << " on self";
 		}
@@ -220,7 +230,9 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget)
 	if (!targetSelected)
 		return false;
 
-	if (item->GetProto()->Class == ITEM_CLASS_CONSUMABLE && item->GetProto()->SubClass == ITEM_SUBCLASS_FOOD)
+	ItemPrototype const* proto = item->GetProto();
+	if (proto->Class == ITEM_CLASS_CONSUMABLE && (proto->SubClass == ITEM_SUBCLASS_FOOD || proto->SubClass == ITEM_SUBCLASS_CONSUMABLE) &&
+		(proto->Spells[0].SpellCategory == 11 || proto->Spells[0].SpellCategory == 59))
 	{
 		if (bot->IsInCombat())
 			return false;
