@@ -80,11 +80,15 @@ void PlayerbotFactory::Prepare()
     bot->CombatStop(true);
     bot->SetLevel(level);
 
-	if (!sPlayerbotAIConfig.randomBotShowHelmet)
-	{
-		bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM);
-		bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK);
-	}
+    if (!sPlayerbotAIConfig.randomBotShowHelmet)
+    {
+    bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM);
+    }
+
+    if (!sPlayerbotAIConfig.randomBotShowCloak)
+    {
+    bot->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK);
+    }
 }
 
 void PlayerbotFactory::Randomize(bool incremental)
@@ -176,12 +180,12 @@ void PlayerbotFactory::InitPet()
         if (!map)
             return;
 
-		vector<uint32> ids;
+        vector<uint32> ids;
         for (uint32 id = 0; id < sCreatureStorage.GetMaxEntry(); ++id)
         {
             CreatureInfo const* co = sCreatureStorage.LookupEntry<CreatureInfo>(id);
-			if (!co)
-				continue;
+        if (!co)
+        continue;
 
             if (!co->isTameable())
                 continue;

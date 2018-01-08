@@ -67,8 +67,9 @@ public:
     uint32 randomBotGuildCount;
     bool deleteRandomBotGuilds;
     std::list<uint32> randomBotGuilds;
-	bool randomBotShowHelmet;
-
+    bool randomBotShowHelmet;
+    bool randomBotShowCloak;
+	bool enableGreet;
     bool guildTaskEnabled;
     uint32 minGuildTaskChangeTime, maxGuildTaskChangeTime;
     uint32 minGuildTaskAdvertisementTime, maxGuildTaskAdvertisementTime;
