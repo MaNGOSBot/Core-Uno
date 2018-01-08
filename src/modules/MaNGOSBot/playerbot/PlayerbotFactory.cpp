@@ -148,8 +148,8 @@ void PlayerbotFactory::Randomize(bool incremental)
     sLog.outDetail("Initializing potions...");
     InitPotions();
 
-    sLog.outDetail("Initializing second equipment set...");
-    InitSecondEquipmentSet();
+    //sLog.outDetail("Initializing second equipment set...");
+    //InitSecondEquipmentSet();
 
     sLog.outDetail("Initializing inventory...");
     InitInventory();
