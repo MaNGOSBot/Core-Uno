@@ -50,19 +50,19 @@ ChatHelper::ChatHelper(PlayerbotAI* ai) : PlayerbotAIAware(ai)
     consumableSubClasses["bandage"] = ITEM_SUBCLASS_BANDAGE;
     consumableSubClasses["enchant"] = ITEM_SUBCLASS_CONSUMABLE_OTHER;
 
-    //tradeSubClasses["cloth"] = ITEM_SUBCLASS_CLOTH;
-    //tradeSubClasses["leather"] = ITEM_SUBCLASS_LEATHER;
-    //tradeSubClasses["metal"] = ITEM_SUBCLASS_METAL_STONE;
-    //tradeSubClasses["stone"] = ITEM_SUBCLASS_METAL_STONE;
-    //tradeSubClasses["ore"] = ITEM_SUBCLASS_METAL_STONE;
-    //tradeSubClasses["meat"] = ITEM_SUBCLASS_MEAT;
-    //tradeSubClasses["herb"] = ITEM_SUBCLASS_HERB;
-    //tradeSubClasses["elemental"] = ITEM_SUBCLASS_ELEMENTAL;
-    //tradeSubClasses["disenchants"] = ITEM_SUBCLASS_ENCHANTING;
-    //tradeSubClasses["enchanting"] = ITEM_SUBCLASS_ENCHANTING;
-    //tradeSubClasses["gems"] = ITEM_SUBCLASS_JEWELCRAFTING;
-    //tradeSubClasses["jewels"] = ITEM_SUBCLASS_JEWELCRAFTING;
-    //tradeSubClasses["jewelcrafting"] = ITEM_SUBCLASS_JEWELCRAFTING;
+    tradeSubClasses["cloth"] = ITEM_SUBCLASS_CLOTH;
+    tradeSubClasses["leather"] = ITEM_SUBCLASS_LEATHER;
+    tradeSubClasses["metal"] = ITEM_SUBCLASS_METAL_STONE;
+    tradeSubClasses["stone"] = ITEM_SUBCLASS_METAL_STONE;
+    tradeSubClasses["ore"] = ITEM_SUBCLASS_METAL_STONE;
+    tradeSubClasses["meat"] = ITEM_SUBCLASS_MEAT;
+    tradeSubClasses["herb"] = ITEM_SUBCLASS_HERB;
+    tradeSubClasses["elemental"] = ITEM_SUBCLASS_ELEMENTAL;
+    tradeSubClasses["disenchants"] = ITEM_SUBCLASS_ENCHANTING;
+    tradeSubClasses["enchanting"] = ITEM_SUBCLASS_ENCHANTING;
+    tradeSubClasses["gems"] = ITEM_SUBCLASS_JEWELCRAFTING;
+    tradeSubClasses["jewels"] = ITEM_SUBCLASS_JEWELCRAFTING;
+    tradeSubClasses["jewelcrafting"] = ITEM_SUBCLASS_JEWELCRAFTING;
 
     slots["head"] = EQUIPMENT_SLOT_HEAD;
     slots["neck"] = EQUIPMENT_SLOT_NECK;
@@ -159,6 +159,8 @@ ChatHelper::ChatHelper(PlayerbotAI* ai) : PlayerbotAIAware(ai)
     races[RACE_TAUREN] = "Tauren";
     races[RACE_TROLL] = "Troll";
     races[RACE_UNDEAD] = "Undead";
+    races[RACE_BLOODELF] = "Blood Elf";
+    races[RACE_DRAENEI] = "Draenei";
 }
 
 string ChatHelper::formatMoney(uint32 copper)
