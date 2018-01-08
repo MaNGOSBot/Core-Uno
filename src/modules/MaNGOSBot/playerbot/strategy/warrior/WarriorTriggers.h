@@ -116,3 +116,4 @@ namespace ai
     public:
         ShieldBashInterruptEnemyHealerSpellTrigger(PlayerbotAI* ai) : InterruptEnemyHealerTrigger(ai, "shield bash") {}
     };
+}
