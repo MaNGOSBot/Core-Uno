@@ -28,6 +28,11 @@ if(SCRIPT_LIB_ELUNA)
 endif()
 
 # Include Player Bots if enabled
-#if(PLAYERBOTS)
-#    add_subdirectory(Bots)
-#endif()
+if(PLAYERBOTS)
+    add_subdirectory(Bots)
+endif()
+
+# Include Player Bots if enabled
+if(IMMERSIVE)
+    add_subdirectory(Immersive)
+endif()

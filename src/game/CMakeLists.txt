@@ -139,11 +139,12 @@ set(LIBRARY_SRCS
     pchdef.h
 )
 
-if(PCH)
-    include_directories(${CMAKE_CURRENT_BINARY_DIR})
-endif()
-
 add_library(${LIBRARY_NAME} STATIC ${LIBRARY_SRCS})
+
+# Generate precompiled header
+if(PCH)
+    ADD_CXX_PCH(${LIBRARY_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.h ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.cpp)
+endif()
 
 target_link_libraries(${LIBRARY_NAME} shared detour)
 
@@ -158,19 +159,27 @@ if(NOT ACE_USE_EXTERNAL)
     add_dependencies(${LIBRARY_NAME} ace)
 endif()
 
+if(PLAYERBOTS)
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/src/modules/Bots/playerbot
+        ${CMAKE_SOURCE_DIR}/src/modules/Bots/ahbot
+    )
+    target_link_libraries(${LIBRARY_NAME} Bots)
+    add_dependencies(${LIBRARY_NAME} Bots)
+	endif()
 # Generate precompiled header
 if(PCH)
     ADD_CXX_PCH(${LIBRARY_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.h ${CMAKE_CURRENT_SOURCE_DIR}/pchdef.cpp)
 endif()
 
-#if(PLAYERBOTS)
-#    include_directories(
-#        ${CMAKE_SOURCE_DIR}/src/modules/Bots/playerbot
-#        ${CMAKE_SOURCE_DIR}/src/modules/Bots/ahbot
-#    )
-#    target_link_libraries(${LIBRARY_NAME} Bots)
-#    add_dependencies(${LIBRARY_NAME} Bots)
-#endif()
+if(IMMERSIVE)
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/src/modules/Immersive
+        ${CMAKE_SOURCE_DIR}/src/modules/Immersive
+    )
+    target_link_libraries(${LIBRARY_NAME} Immersive)
+    add_dependencies(${LIBRARY_NAME} Immersive)
+endif()
 
 if(SCRIPT_LIB_SD3)
     include_directories(${CMAKE_SOURCE_DIR}/src/modules/SD3)

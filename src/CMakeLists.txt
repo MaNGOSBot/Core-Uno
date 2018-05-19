@@ -47,11 +47,15 @@ if(BUILD_MANGOSD)
     add_subdirectory(modules)
 endif()
 
+
 # If we want the tools for map/vmap/mmap extraction
 if(BUILD_TOOLS)
     add_subdirectory(tools)
 endif()
 
+if(TESTS)
+  add_subdirectory(test)
+endif(TESTS)
 if (BUILD_MANGOSD OR BUILD_REALMD)
 if(WIN32 AND MSVC)
   get_filename_component(MYSQL_LIB_DIR ${MYSQL_LIBRARY} DIRECTORY)

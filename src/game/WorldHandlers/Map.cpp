@@ -368,7 +368,7 @@ Map::Add(T* obj)
     AddToGrid(obj, grid, cell);
     obj->AddToWorld();
 
-    if (obj->isActiveObject())
+    if (obj->IsActiveObject())
         { AddToActive(obj); }
 
     DEBUG_LOG("%s enters grid[%u,%u]", obj->GetGuidStr().c_str(), cell.GridX(), cell.GridY());
@@ -658,6 +658,9 @@ void Map::Remove(Player* player, bool remove)
     SendRemoveTransports(player);
     UpdateObjectVisibility(player, cell, p);
 
+#ifdef ENABLE_PLAYERBOTS
+    if (!player->GetPlayerbotAI())
+#endif
     player->ResetMap();
     if (remove)
         { DeleteFromWorld(player); }
@@ -682,7 +685,7 @@ Map::Remove(T* obj, bool remove)
     NGridType* grid = getNGrid(cell.GridX(), cell.GridY());
     MANGOS_ASSERT(grid != NULL);
 
-    if (obj->isActiveObject())
+    if (obj->IsActiveObject())
         { RemoveFromActive(obj); }
 
     if (remove)
@@ -773,7 +776,7 @@ bool Map::CreatureCellRelocation(Creature* c, const Cell &new_cell)
     Cell const& old_cell = c->GetCurrentCell();
     if (old_cell.DiffGrid(new_cell))
     {
-        if (!c->isActiveObject() && !loaded(new_cell.gridPair()))
+        if (!c->IsActiveObject() && !loaded(new_cell.gridPair()))
         {
             DEBUG_FILTER_LOG(LOG_FILTER_CREATURE_MOVES, "Creature (GUID: %u Entry: %u) attempt move from grid[%u,%u]cell[%u,%u] to unloaded grid[%u,%u]cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY(), new_cell.GridX(), new_cell.GridY(), new_cell.CellX(), new_cell.CellY());
             return false;

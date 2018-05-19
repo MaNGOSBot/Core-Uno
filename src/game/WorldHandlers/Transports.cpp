@@ -25,6 +25,7 @@
 #include "Common.h"
 
 #include "Transports.h"
+#include "Map.h"
 #include "MapManager.h"
 #include "ObjectMgr.h"
 #include "ObjectGuid.h"

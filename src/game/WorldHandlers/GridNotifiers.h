@@ -925,6 +925,60 @@ namespace MaNGOS
             bool i_targetForPlayer;
     };
 
+    class AnySpecificUnitInGameObjectRangeCheck
+    {
+        public:
+            AnySpecificUnitInGameObjectRangeCheck(GameObject* go, float range, bool friendly = true)
+                : i_obj(go), i_range(range), i_isFriendly(friendly)
+            {
+            }
+            WorldObject const& GetFocusObject() const { return *i_obj; }
+            bool operator()(Unit* u)
+            {
+                // Check contains checks for: live, non-selectable, non-attackable flags, flight check and GM check, ignore totems
+                if (!u->IsTargetableForAttack())
+                    { return false; }
+
+                if (u->GetTypeId() == TYPEID_UNIT && ((Creature*)u)->IsTotem())
+                    { return false; }
+
+                if ((i_isFriendly ? i_obj->IsFriendlyTo(u) : i_obj->IsHostileTo(u)) && i_obj->IsWithinDistInMap(u, i_range))
+                    { return true; }
+
+                return false;
+            }
+        private:
+            GameObject*         i_obj;
+            float               i_range;
+            bool                i_isFriendly;
+    };
+
+    class AllSpecificUnitsInGameObjectRangeDo
+    {
+        public:
+            AllSpecificUnitsInGameObjectRangeDo(GameObject* go, float range, bool friendly = true)
+                : i_obj(go), i_range(range), i_isFriendly(friendly)
+            {
+            }
+            WorldObject const& GetFocusObject() const { return *i_obj; }
+            void operator()(Unit* u)
+            {
+                // Check contains checks for: live, non-selectable, non-attackable flags, flight check and GM check, ignore totems
+                if (!u->IsTargetableForAttack())
+                    { return; }
+
+                if (u->GetTypeId() == TYPEID_UNIT && ((Creature*)u)->IsTotem())
+                    { return; }
+
+                if ((i_isFriendly ? i_obj->IsFriendlyTo(u) : i_obj->IsHostileTo(u)) && i_obj->IsWithinDistInMap(u, i_range))
+                    { i_obj->Use(u); }
+            }
+        private:
+            GameObject*         i_obj;
+            float               i_range;
+            bool                i_isFriendly;
+    };
+
     // do attack at call of help to friendly crearture
     class CallOfHelpCreatureInRangeDo
     {
