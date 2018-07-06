@@ -494,9 +494,9 @@ void PlayerbotAI::DoSpecificAction(string name)
 
 bool PlayerbotAI::PlaySound(uint32 emote)
 {
-    if (EmotesEntry const* emoteEntry = sEmotesStore.LookupEntry(emote))
+if (EmotesTextSoundEntry const* soundEntry = FindTextSoundEmoteFor(emote, bot->getRace(), bot->getGender()))
     {
-        bot->PlayDistanceSound(emoteEntry->Id);
+    bot->PlayDistanceSound(soundEntry->SoundId);
         return true;
     }
 
@@ -1142,8 +1142,8 @@ bool PlayerbotAI::canDispel(const SpellEntry* entry, uint32 dispelType)
 
 bool IsAlliance(uint8 race)
 {
-    return race == RACE_HUMAN || race == RACE_DWARF || race == RACE_NIGHTELF ||
-            race == RACE_GNOME;
+    return race == RACE_HUMAN || race == RACE_DWARF || race == RACE_NIGHTELF || race == RACE_DRAENEI ||
+        race == RACE_GNOME;
 }
 
 bool PlayerbotAI::IsOpposing(Player* player)

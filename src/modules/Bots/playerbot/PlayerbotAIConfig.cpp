@@ -147,6 +147,10 @@ bool PlayerbotAIConfig::Initialize()
     minGuildTaskRewardTime = config.GetIntDefault("AiPlayerbot.MinGuildTaskRewardTime", 30);
     maxGuildTaskRewardTime = config.GetIntDefault("AiPlayerbot.MaxGuildTaskRewardTime", 120);
     guildTaskAdvertCleanupTime = config.GetIntDefault("AiPlayerbot.GuildTaskAdvertCleanupTime", 3600);
+    enableGreet = config.GetBoolDefault("AiPlayerbot.EnableGreet", false);
+    //cosmetic
+    randomBotShowCloak = config.GetBoolDefault("AiPlayerbot.RandomBotShowCloak", false);
+    randomBotShowHelmet = config.GetBoolDefault("AiPlayerbot.RandomBotShowHelmet", false);
 
     RandomPlayerbotFactory::CreateRandomBots();
     sLog.outString("AI Playerbot configuration loaded");

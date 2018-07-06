@@ -2147,19 +2147,19 @@ void Pet::UpdateSpeed(UnitMoveType mtype, bool forced, float ratio)
             return;
     }
 
-	    // Get owner current speed
-		float ownerSpeed = owner->GetSpeedRate(mtype);
-	    int32 slow = owner->GetMaxNegativeAuraModifier(SPELL_AURA_MOD_DECREASE_SPEED);
+        // Get owner current speed
+        float ownerSpeed = owner->GetSpeedRate(mtype);
+        int32 slow = owner->GetMaxNegativeAuraModifier(SPELL_AURA_MOD_DECREASE_SPEED);
 
-		    // If owner is affected by speed reduction effects, do not take them into account
-			    // (a dazed hunter does not affect pet's speed)
-			if (slow)
-			{ ownerSpeed *= 100.0f / (100.0f + slow); }
-		
-			float speed = std::max(non_stack_bonus, stack_bonus) * ownerSpeed;
-		
-			if (main_speed_mod)
-			speed = speed * (100.0f + main_speed_mod) / 100.0f;
+            // If owner is affected by speed reduction effects, do not take them into account
+            // (a dazed hunter does not affect pet's speed)
+            if (slow)
+
+            { ownerSpeed *= 100.0f / (100.0f + slow); }
+            float speed = std::max(non_stack_bonus, stack_bonus) * ownerSpeed;
+        
+            if (main_speed_mod)
+            speed = speed * (100.0f + main_speed_mod) / 100.0f;
 
     switch (mtype)
     {
@@ -2182,10 +2182,53 @@ void Pet::UpdateSpeed(UnitMoveType mtype, bool forced, float ratio)
     }
 
     // Apply strongest slow aura mod to speed
-	slow = GetMaxNegativeAuraModifier(SPELL_AURA_MOD_DECREASE_SPEED);;
+    slow = GetMaxNegativeAuraModifier(SPELL_AURA_MOD_DECREASE_SPEED);;
     if (slow)
         { speed *= (100.0f + slow) / 100.0f; }
 
-
     SetSpeedRate(mtype, speed * ratio, forced);
+}
+
+  PetDatabaseStatus Pet::GetStatusFromDB(Player* owner)
+    {
+        PetDatabaseStatus status = PET_DB_NO_PET;
+
+        uint32 ownerid = owner->GetGUIDLow();
+
+        QueryResult* result;
+        //      0   1      2      3        4      5    6           7              8        9           10    11    12       13         14       15            16      17              18        19                 20                 21              22
+        result = CharacterDatabase.PQuery("SELECT id, entry, owner, modelid, level, exp, Reactstate, loyaltypoints, loyalty, trainpoint, slot, name, renamed, curhealth, curmana, curhappiness, abdata, TeachSpelldata, savetime, resettalents_cost, resettalents_time, CreatedBySpell, PetType "
+            "FROM character_pet WHERE owner = %u AND (slot = %u OR slot > %u)",
+            ownerid, PET_SAVE_AS_CURRENT, PET_SAVE_LAST_STABLE_SLOT);
+        if (!result)
+        {
+            return status;
+        }
+
+        Field* fields = result->Fetch();
+
+        uint32 petentry = fields[1].GetUInt32();
+
+        if (!petentry)
+        {
+            delete result;
+            return status;
+        }
+
+        CreatureInfo const* creatureInfo = ObjectMgr::GetCreatureTemplate(petentry);
+        if (!creatureInfo)
+        {
+            delete result;
+            return status;
+        }
+
+        uint32 savedHP = fields[13].GetUInt32();
+        delete result;
+        if (savedHP > 0)
+            status = PET_DB_ALIVE;
+        else
+            status = PET_DB_DEAD;
+
+        return status;
+    
 }

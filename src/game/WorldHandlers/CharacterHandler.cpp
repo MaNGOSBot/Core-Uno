@@ -221,7 +221,11 @@ class CharacterHandler
         void HandlePlayerLoginCallback(QueryResult * /*dummy*/, SqlQueryHolder* holder)
         {
             if (!holder) { return; }
-            WorldSession* session = sWorld.FindSession(((LoginQueryHolder*)holder)->GetAccountId());
+
+            //WorldSession* session = sWorld.FindSession(((LoginQueryHolder*)holder)->GetAccountId());
+            uint32 accountId = ((LoginQueryHolder*)holder)->GetAccountId();
+            ObjectGuid guid = ((LoginQueryHolder*)holder)->GetGuid();
+            WorldSession* session = sWorld.FindSession(accountId);
             if (!session)
             {
                 delete holder;
@@ -229,7 +233,7 @@ class CharacterHandler
             }
             session->HandlePlayerLogin((LoginQueryHolder*)holder);
 #ifdef ENABLE_PLAYERBOTS
-            ObjectGuid guid = ((LoginQueryHolder*)holder)->GetGuid();
+            //ObjectGuid guid = ((LoginQueryHolder*)holder)->GetGuid();;
             Player* player = sObjectMgr.GetPlayer(guid, true);
             if (player && !player->GetPlayerbotAI())
             {

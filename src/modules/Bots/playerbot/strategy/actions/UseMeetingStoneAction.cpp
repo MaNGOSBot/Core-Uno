@@ -75,7 +75,7 @@ bool SummonAction::Execute(Event event)
     if (!master)
         return false;
 
-    if (master->GetSession()->GetSecurity() >= SEC_GAMEMASTER)
+    if (master->GetSession()->GetSecurity() >= SEC_PLAYER)
         return Teleport(master, bot);
 
     if (Summon(master, bot))
