@@ -218,7 +218,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget)
         }
         else if (!goGuid && !itemTarget)
         {
-            *packet << (uint16)TARGET_FLAG_SELF;
+            *packet << (uint32)TARGET_FLAG_SELF;
             targetSelected = true;
             out << " on self";
         }
